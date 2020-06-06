@@ -1,7 +1,7 @@
 from Utils import *
 from Pion import *
 
-class Player:
+class PlayerClass:
     pionArray = []
     positionArray = []
     # alt solution, seperate pionArray to active, inactive, finished
@@ -14,7 +14,7 @@ class Player:
     def FactoryFunction(self):
         pionArray = []
         for x in range(7):
-            pion = Pion()
+            pion = PionClass()
             pionArray.append(pion)
         return pionArray
     

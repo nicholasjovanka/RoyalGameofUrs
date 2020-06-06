@@ -1,7 +1,7 @@
 import numpy as np
 import Player
 
-class Board:
+class BoardClass:
     boardState = np.empty
 
     def __init__(self):
