@@ -22,7 +22,7 @@ class PlayerClass:
         self.positionArray.clear()
         for pions in self.pionArray:
             self.positionArray.append(pions.position)
-        return self.positionArray
+        return self.positionArray.copy()
     
     def evaluate(self):
         result = 0
