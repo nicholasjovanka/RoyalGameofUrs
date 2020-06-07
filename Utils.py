@@ -18,30 +18,73 @@ def diceRoll():
     print("Dice roll result: " + str(total))
     return total
 
-def humanInfo(board, p1, p2):
+def humanInfo(p1, p2):
     p1Pions = []
     p2Pions = []
 
     for i in p1.getPionPosition():
-        p1Pions.append(i[1])
+        if i[0] == 0:
+            p1Pions.append(i[1])
 
     for j in p2.getPionPosition():
-        p2Pions.append(j[1])
+        if i[0] == 0:
+            p2Pions.append(j[1])
 
     print("\nPlayer 1's Pions:")
     print(p1Pions)
     print("\nPlayer 2's Pions:")
     print(p2Pions)
 
-def humanAction():
+def humanAction(activePlayer, p1, p2):
+    inactivePlayer = None
+    if activePlayer.identifier[0] == 1:
+        inactivePlayer = p2
+    else:
+        inactivePlayer = p1
+
     option = int(input("\nWhat would you like to do?\n [1]. Roll dice\n [2]. Table flip (concede)\n"))
+    move = int
 
     if option == 1:
-        diceRoll()
+        move = diceRoll()
 
     elif option == 2:
         print("You flipped the table and conceded the game.")
 
+    if move == 0:
+        print("You rolled a 0 and ended your turn.")
+        return
+
+    playerPions = []
+    for i in activePlayer.getPionPosition():
+        playerPions.append(i[1])
+
+    print("\nWhich piece would you like to move?")
+    print(playerPions)
+    option = input()
+
+    if activePlayer.identifier[0] == 1:
+        moveHumanPion(p1, move, option, p2)
+    else:
+        moveHumanPion(p2, move, option, p1)
+
+def moveHumanPion(player, move, option, opponent):
+    choice = option
+    i = int
+    if player.identifier == 2:
+        choice = choice.upper()
+    else:
+        choice = int(choice) - 1
+        choice = str(choice)
+
+    for j in range(len(player.pionArray)):
+        if player.pionArray[j].identifier == option:
+            i = j
+            break
+
+    player.pionArray[i].move(move, opponent.getPionPosition(), player.getPionPosition())
+
+
+
 def turnInfo(activePlayer):
     print(activePlayer.name + "'s turn!")
-

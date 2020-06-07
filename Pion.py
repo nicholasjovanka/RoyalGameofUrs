@@ -28,7 +28,16 @@ class PionClass:
             # player can move normally
             return True
 
-    def move(self,n, enemyPos, playerPos):
+    def move(self,n, opponentPos, selfPos):
+        enemyPos = []
+        playerPos = []
+
+        for i in opponentPos:
+            enemyPos.append(i[0])
+
+        for j in selfPos:
+            playerPos.append(j[0])
+
         canMove = self.canmove(n, enemyPos, playerPos)
         # (canmove,indicate next turn, enemy eaten)
         if(canMove == False):
