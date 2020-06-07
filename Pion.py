@@ -1,4 +1,5 @@
 class PionClass:
+    identifier : str
     position : int
     safe : bool
     finish : bool
@@ -6,10 +7,11 @@ class PionClass:
     maxpos = 15
     rosette = [4,8,14]
 
-    def __init__(self):
+    def __init__(self, identifier):
         self.position = 0
         self.safe = True
         self.finish = False
+        self.identifier = identifier
         
     def canmove(self,n,enemyPos, playerPos):
         temp = self.position + n
