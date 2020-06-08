@@ -14,7 +14,7 @@ class MinMaxPlayerClass(GreedyPlayerClass):
         # for i in range(len(selfPos)):
         #     if not (prefSelfPos[i][0] in self.rosette) and selfPos[i][0] in self.rosette:
         #         advDist += 2
-        advDist = enemyPos - selfPos
+        advDist = (15-enemyPos) - (15-selfPos)
         if not prefSelfPos in self.rosette and selfPos in self.rosette:
             advDist += 2
         return advDist
@@ -46,25 +46,33 @@ class MinMaxPlayerClass(GreedyPlayerClass):
     def testMinMax(self, n, enemyPos: int, selfPos: int, player=1, iteration=3):
         if player == 1:
             if n > -1:
-                oldPionPosition, currPionPosition = selfPos.copy()
+                oldPionPosition = currPionPosition = selfPos
                 currPionPosition += n
                 if self.canmove(currPionPosition, enemyPos):
                     enemyPos = self.checkEat(enemyPos, currPionPosition)
                     if not currPionPosition in self.rosette:
                         player *= -1
                     if iteration > 0:
-                        return self.testMinMax(-1, enemyPos, currPionPosition, player, iteration-1)
+                        x = self.testMinMax(-1, enemyPos, currPionPosition, player, iteration-1)
+                        print(x, iteration)
+                        return x
                     else:
-                        return self.evalBoard(enemyPos, currPionPosition, oldPionPosition)
+                        x = self.evalBoard(enemyPos, currPionPosition, oldPionPosition)
+                        print(x, iteration)
+                        return x
                 else:
                     if iteration > 0:
-                        return self.testMinMax(-1, enemyPos,oldPionPosition,-1,iteration-1)
+                        x = self.testMinMax(-1, enemyPos,oldPionPosition,-1,iteration-1)
+                        print(x, iteration)
+                        return x
                     else:
-                        return self.evalBoard(enemyPos, oldPionPosition, oldPionPosition)
+                        x = self.evalBoard(enemyPos, oldPionPosition, oldPionPosition)
+                        print(x, iteration)
+                        return x
             else:
                 values = []
                 for i in range(5):
-                    oldPionPosition, currPionPosition = selfPos.copy()
+                    oldPionPosition = currPionPosition = selfPos
                     currPionPosition += i
                     if self.canmove(currPionPosition, enemyPos):
                         nextenemypos = self.checkEat(enemyPos, currPionPosition)
@@ -79,11 +87,13 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                             values.append(self.testMinMax(-1,enemyPos, oldPionPosition, -1, iteration-1) * self.getChance(i))
                         else:
                             values.append(self.evalBoard(enemyPos, oldPionPosition, oldPionPosition) * self.getChance(i))
-                return values.index(max(values))
+                x = values.index(max(values))
+                print(x, iteration)
+                return x
         elif player == -1:
             values = []
             for i in range(5):
-                oldEnemyPosition, currEnemyPosition = enemyPos.copy()
+                oldEnemyPosition = currEnemyPosition = enemyPos
                 currEnemyPosition += i
                 if self.canmove(currEnemyPosition, selfPos):
                     nextPlayerPos = self.checkEat(selfPos, currEnemyPosition)
@@ -98,7 +108,9 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                         values.append(self.testMinMax(-1, oldEnemyPosition, selfPos, 1, iteration-1) * self.getChance(i))
                     else:
                         values.append(self.evalBoard(oldEnemyPosition, selfPos, selfPos))
-                return values.index(min(values))
+                x = values.index(min(values))
+                print(x, iteration)
+                return x
         
     def minmax(self, n, enemyPos, chance, player = 0, iteration = 3):
         value : float
