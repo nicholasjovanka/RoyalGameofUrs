@@ -36,9 +36,9 @@ class PlayerClass:
             self.positionArray.append([pions.position, pions.identifier])
         return self.positionArray.copy()
     
-    def evaluate(self):
+    def evaluate(self, positionArray):
         result = 0
-        for pions in self.pionArray:
+        for pions in positionArray:
             result += (pions.maxpos-pions.position)
         return result
 
