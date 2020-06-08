@@ -1,12 +1,13 @@
 from GreedyPlayer import GreedyPlayerClass
 import random
+import copy
 
 class MinMaxPlayerClass(GreedyPlayerClass):
 
     rosette = [4,8,16]
 
     def getChance(self, n):
-        diceChance = [0.0625,0.25,0.375,0.25,0.0625]
+        diceChance = [1,4,6,4,1]
         return diceChance[n]
 
     def evalBoard(self, enemyPos, selfPos, prefSelfPos):
@@ -46,37 +47,39 @@ class MinMaxPlayerClass(GreedyPlayerClass):
     def testMinMax(self, n, enemyPos: int, selfPos: int, player=1, iteration=3):
         if player == 1:
             if n > -1:
-                oldPionPosition = currPionPosition = selfPos
+                oldPionPosition = copy.copy(selfPos)
+                currPionPosition = copy.copy(selfPos)
                 currPionPosition += n
                 if self.canmove(currPionPosition, enemyPos):
                     enemyPos = self.checkEat(enemyPos, currPionPosition)
-                    if not currPionPosition in self.rosette:
+                    if not (currPionPosition in self.rosette):
                         player *= -1
                     if iteration > 0:
                         x = self.testMinMax(-1, enemyPos, currPionPosition, player, iteration-1)
-                        print(x, iteration)
+                        print(x)
                         return x
                     else:
                         x = self.evalBoard(enemyPos, currPionPosition, oldPionPosition)
-                        print(x, iteration)
+                        print(x)
                         return x
                 else:
                     if iteration > 0:
                         x = self.testMinMax(-1, enemyPos,oldPionPosition,-1,iteration-1)
-                        print(x, iteration)
+                        print(x)
                         return x
                     else:
                         x = self.evalBoard(enemyPos, oldPionPosition, oldPionPosition)
-                        print(x, iteration)
+                        print(x)
                         return x
             else:
                 values = []
                 for i in range(5):
-                    oldPionPosition = currPionPosition = selfPos
+                    oldPionPosition = copy.copy(selfPos)
+                    currPionPosition = copy.copy(selfPos)
                     currPionPosition += i
                     if self.canmove(currPionPosition, enemyPos):
                         nextenemypos = self.checkEat(enemyPos, currPionPosition)
-                        if not currPionPosition in self.rosette:
+                        if not (currPionPosition in self.rosette):
                             player *= -1
                         if iteration > 0:
                             values.append(self.testMinMax(-1, nextenemypos, currPionPosition, player, iteration-1) * self.getChance(i))
@@ -87,30 +90,31 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                             values.append(self.testMinMax(-1,enemyPos, oldPionPosition, -1, iteration-1) * self.getChance(i))
                         else:
                             values.append(self.evalBoard(enemyPos, oldPionPosition, oldPionPosition) * self.getChance(i))
-                x = values.index(max(values))
-                print(x, iteration)
+                x = max(values)
+                print(values, iteration)
                 return x
         elif player == -1:
             values = []
             for i in range(5):
-                oldEnemyPosition = currEnemyPosition = enemyPos
+                oldEnemyPosition = copy.copy(enemyPos)
+                currEnemyPosition = copy.copy(enemyPos)
                 currEnemyPosition += i
                 if self.canmove(currEnemyPosition, selfPos):
                     nextPlayerPos = self.checkEat(selfPos, currEnemyPosition)
-                    if not currEnemyPosition in self.rosette:
+                    if not (currEnemyPosition in self.rosette):
                         player *= -1
                     if iteration > 0:
                         values.append(self.testMinMax(-1, currEnemyPosition, nextPlayerPos, player, iteration-1) * self.getChance(i))
                     else:
-                         values.append(self.evalBoard(currEnemyPosition, nextPlayerPos, selfPos) * self.getChance(i))
+                        values.append(self.evalBoard(currEnemyPosition, nextPlayerPos, selfPos) * self.getChance(i))
                 else:
                     if iteration > 0 :
                         values.append(self.testMinMax(-1, oldEnemyPosition, selfPos, 1, iteration-1) * self.getChance(i))
                     else:
                         values.append(self.evalBoard(oldEnemyPosition, selfPos, selfPos))
-                x = values.index(min(values))
-                print(x, iteration)
-                return x
+            x = min(values)
+            print(values, iteration)
+            return x
         
     def minmax(self, n, enemyPos, chance, player = 0, iteration = 3):
         value : float
