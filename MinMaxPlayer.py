@@ -19,13 +19,16 @@ class MinMaxPlayerClass(GreedyPlayerClass):
             advDist += 2
         return advDist
 
+    # pos1 yang dimakan ,pos2 yang makan
     def checkEat(self, pos1, pos2):
-        newpos = []
-        for i in pos1:
-            if i in pos2 and not(i in self.rosette) and i > 4 and i < 13:
-                newpos.append(0)
-            else:
-                newpos.append(i)
+        newpos = pos2
+        # for i in pos1:
+        #     if i in pos2 and not(i in self.rosette) and i > 4 and i < 13:
+        #         newpos.append(0)
+        #     else:
+        #         newpos.append(i)
+        if pos1 == pos2 and not pos1 == 8 and pos1 > 4 and pos1 < 13:
+            newpos = 0
         return newpos
 
     def simulateMovement(self, pos1,pos2):
