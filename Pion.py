@@ -20,7 +20,7 @@ class PionClass:
             return False
         else:
             # if the player lands on rosette in the middle while an enemy is there
-            if temp in self.rosette and (temp in enemyPos or temp in playerPos):
+            if temp in [8] and (temp in enemyPos or temp in playerPos):
                 return False
             # if the pion will land on teammate, decline
             elif temp in playerPos:
