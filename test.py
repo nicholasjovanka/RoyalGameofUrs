@@ -11,8 +11,7 @@ if __name__ == "__main__":
     # print(max([-2016, 2592, -576, 3240, -720, 3240, -720]))
 
     x = GreedyPlayerClass("Nicho", [1, "Bot"])
-    y = GreedyPlayerClass("afew", [2,"bot"])
+    y = GreedyPlayerClass("afew", [2,"bot"], [0, 0, 9, 0, 0, 0, 0])
     x.pionArray[2].move(7, y.getPionPosition(), x.getPionPosition())
-    y.pionArray[2].move(9, x.getPionPosition(), y.getPionPosition())
-    # print(y.getPionPosition())
+    print(y.getPionPosition())
     print(x.bestPion(2, y.getPionPosition()))

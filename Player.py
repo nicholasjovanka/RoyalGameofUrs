@@ -8,25 +8,32 @@ class PlayerClass:
     positionArray = []
     # alt solution, seperate pionArray to active, inactive, finished
     
-    def __init__(self, name, identifier):
-        self.pionArray = self.FactoryFunction(identifier[0])
+    def __init__(self, name, identifier, initialPionPosition= None):
+        if initialPionPosition == None:
+            self.pionArray = self.FactoryFunction(identifier[0])
+        else:
+            self.pionArray = self.FactoryFunction(identifier[0], initialPionPosition)
+
         for pions in self.pionArray:
             self.positionArray.append(pions.position)
 
         self.name = name
         self.identifier = identifier
 
-    def FactoryFunction(self, playerIdentifier):
+    def FactoryFunction(self, playerIdentifier, initialPionPosition= None):
         pionArray = []
+        identifierArray = []
         if playerIdentifier == 1:
-            for x in ['1', '2', '3', '4', '5', '6', '7']:
-                pion = PionClass(x)
-                pionArray.append(pion)
-
+            identifierArray = ['1', '2', '3', '4', '5', '6', '7']
         elif playerIdentifier == 2:
-            for x in ['A', 'B', 'C', 'D', 'E', 'F', 'G']:
-                pion = PionClass(x)
-                pionArray.append(pion)
+            identifierArray = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+
+        for x in range(len(identifierArray)):
+            if initialPionPosition == None:
+                pion = PionClass(identifierArray[x])
+            else:
+                pion = PionClass(identifierArray[x], initialPionPosition[x])
+            pionArray.append(pion)
 
         return pionArray
     

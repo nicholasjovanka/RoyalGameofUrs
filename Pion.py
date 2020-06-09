@@ -7,8 +7,8 @@ class PionClass:
     maxpos = 15
     rosette = [4,8,14]
 
-    def __init__(self, identifier):
-        self.position = 0
+    def __init__(self, identifier, initialPosition= 0):
+        self.position = initialPosition
         self.safe = True
         self.finish = False
         self.identifier = identifier
