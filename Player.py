@@ -39,6 +39,6 @@ class PlayerClass:
     def evaluate(self, positionArray):
         result = 0
         for pions in positionArray:
-            result += (pions.maxpos-pions.position)
+            result += 15-pions
         return result
 
