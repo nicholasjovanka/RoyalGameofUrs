@@ -128,7 +128,7 @@ class MinMaxPlayerClass(GreedyPlayerClass):
     #         return x
         
     # player = -1 => enemy, player = 1 => self
-    def minmax(self, n, enemyPos, selfPos, player=1, iteration=3):
+    def minmax(self, n, enemyPos, selfPos, player=1, iteration=2):
         if player == 1:
             if n > -1:
                 values = []
@@ -140,24 +140,23 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                     if self.canmoveArray(currPionPosition[i], oldPionPosition, enemyPos):
                         newEnemyPos = self.checkEat(oldEnemyPosition, currPionPosition)
                         if not (currPionPosition[i] in self.rosette):
-                            player *= -1
+                            nxtplayer = -1
+                        else:
+                            nxtplayer = 1
                         if iteration > 0:
-                            # print(currPionPosition)
-                            x = self.minmax(-1, newEnemyPos, currPionPosition, player, iteration-1)
-                            # print(x)
+                            x = self.minmax(-1, newEnemyPos, currPionPosition, nxtplayer, iteration-1)
                             values.append(x)
                         else:
+                            print(currPionPosition, newEnemyPos, nxtplayer)
                             x = self.evalBoard(newEnemyPos, currPionPosition, oldPionPosition)
-                            # print(x)
                             values.append(x)
                     else:
                         if iteration > 0:
                             x = self.minmax(-1, oldEnemyPosition, oldPionPosition,-1,iteration-1)
-                            # print(x)
                             values.append(x)
                         else:
+                            print(oldPionPosition, oldEnemyPosition, nxtplayer)
                             x = self.evalBoard(oldEnemyPosition, oldPionPosition, oldPionPosition)
-                            # print(x)
                             values.append(x)
                 print(values)
                 return values.index(max(values))
@@ -172,20 +171,20 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                         currPionPosition[j] += i
                         if self.canmoveArray(currPionPosition[j], oldPionPosition, enemyPos):
                             nextenemypos = self.checkEat(oldEnemyPosition, currPionPosition)
-                            # print(nextenemypos)
                             if not (currPionPosition[j] in self.rosette):
-                                player *= -1
-                            if iteration > 0:
-                                # print(currPionPosition)
-                                rollResult.append(self.minmax(-1, nextenemypos, currPionPosition, player, iteration-1) * self.getChance(i))
+                                nxtplayer = -1
                             else:
-                                print(currPionPosition, nextenemypos, player)
+                                nxtplayer = 1
+                            if iteration > 0:
+                                rollResult.append(self.minmax(-1, nextenemypos, currPionPosition, nxtplayer, iteration-1) * self.getChance(i))
+                            else:
+                                print(currPionPosition, nextenemypos, nxtplayer)
                                 rollResult.append(self.evalBoard(nextenemypos, currPionPosition, oldPionPosition) * self.getChance(i))
                         else:
                             if iteration > 0:
                                 rollResult.append(self.minmax(-1,oldEnemyPosition, oldPionPosition, -1, iteration-1) * self.getChance(i))
                             else:
-                                print(oldPionPosition, enemyPos, player)
+                                print(oldPionPosition, enemyPos, nxtplayer)
                                 rollResult.append(self.evalBoard(oldEnemyPosition, oldPionPosition, oldPionPosition) * self.getChance(i))
                     values.append(max(rollResult))
                 x = max(values)
@@ -202,9 +201,11 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                     if self.canmoveArray(currEnemyPosition[j], enemyPos, selfPos):
                         nextPlayerPos = self.checkEat(oldEnemyPosition, currEnemyPosition)
                         if not (currEnemyPosition[j] in self.rosette):
-                            player *= -1
+                            nxtplayer = 1
+                        else:
+                            nxtplayer = -1
                         if iteration > 0:
-                            rollResult.append(self.minmax(-1, currEnemyPosition, nextPlayerPos, player, iteration-1) * self.getChance(i))
+                            rollResult.append(self.minmax(-1, currEnemyPosition, nextPlayerPos, nxtplayer, iteration-1) * self.getChance(i))
                         else:
                             print(nextPlayerPos, currEnemyPosition, player)
                             rollResult.append(self.evalBoard(currEnemyPosition, nextPlayerPos, selfPos) * self.getChance(i))
