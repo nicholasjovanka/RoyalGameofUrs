@@ -22,6 +22,8 @@ class GreedyPlayerClass(PlayerClass):
                 advantage = 0
                 if(nextTurn == False):
                     advantage = -4
+
+
                 evaluation = (self.simulatedPions[i].distanceToGoal() + self.simulatedPions[i].nextRosette()[1] - eaten + advantage)
                 if evaluation < best:
                     best = evaluation

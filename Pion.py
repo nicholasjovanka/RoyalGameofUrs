@@ -50,7 +50,7 @@ class PionClass:
             self.changeSafe(False)
             self.position += n
             if self.position in enemyPos:
-                return(True,True,enemyPos)
+                return(True,True,self.position)
             return (True,True,-1)
 
     def changeSafe(self, state):

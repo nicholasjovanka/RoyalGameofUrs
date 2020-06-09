@@ -14,5 +14,5 @@ if __name__ == "__main__":
     y = GreedyPlayerClass("afew", [2,"bot"])
     x.pionArray[2].move(7, y.getPionPosition(), x.getPionPosition())
     y.pionArray[2].move(9, x.getPionPosition(), y.getPionPosition())
-    print(y.getPionPosition())
+    # print(y.getPionPosition())
     print(x.bestPion(2, y.getPionPosition()))
