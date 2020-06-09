@@ -35,6 +35,12 @@ class PlayerClass:
         for pions in self.pionArray:
             self.positionArray.append([pions.position, pions.identifier])
         return self.positionArray.copy()
+
+    def testPionPosition(self):
+        self.positionArray.clear()
+        for pions in self.pionArray:
+            self.positionArray.append([pions.position, pions.identifier])
+        return self.positionArray.copy()
     
     def evaluate(self, positionArray):
         result = 0
