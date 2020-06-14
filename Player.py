@@ -55,3 +55,16 @@ class PlayerClass:
             result += 15-pions
         return result
 
+    def checkWin(self):
+        completedPions = 0
+        for pions in self.pionArray:
+            if pions.position == 15:
+                completedPions += 1
+
+        if completedPions == 7:
+            print(self.name + " wins!")
+            return True
+        else:
+            print(self.name + " has not won.")
+            return False
+
