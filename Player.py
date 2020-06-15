@@ -6,6 +6,7 @@ class PlayerClass:
     identifier = "" #format: [Player (1/2) (int), "Human"/"Bot"]
     pionArray = []
     positionArray = []
+    isActive = False
     # alt solution, seperate pionArray to active, inactive, finished
     
     def __init__(self, name, identifier, initialPionPosition= None):
@@ -43,6 +44,12 @@ class PlayerClass:
             self.positionArray.append([pions.position, pions.identifier])
         return self.positionArray.copy()
 
+    def getPionPositionNoId(self):
+        self.positionArray.clear()
+        for pions in self.pionArray:
+            self.positionArray.append(pions.position)
+        return self.positionArray
+
     def testPionPosition(self):
         self.positionArray.clear()
         for pions in self.pionArray:
@@ -68,3 +75,13 @@ class PlayerClass:
             print(self.name + " has not won.")
             return False
 
+    def getIsActive(self):
+        return self.isActive
+
+    def setIsActive(self, activeState):
+        self.isActive = activeState
+
+    def pionKnockback(self, position):
+        for i in range(len(self.pionArray)):
+            if self.pionArray[i].position == position:
+                self.pionArray[i].position = 0

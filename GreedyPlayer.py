@@ -1,6 +1,6 @@
-from Utils import *
 from Pion import *
 from Player import *
+import copy
 
 class GreedyPlayerClass(PlayerClass):
     simulatedPions = []
@@ -16,7 +16,7 @@ class GreedyPlayerClass(PlayerClass):
         best = 9999999
         chosenPion = 0
         for i in range(7):
-            self.simulatedPions = self.pionArray.copy()
+            self.simulatedPions = copy.deepcopy(self.pionArray)
             canmove, nextTurn, eaten = self.simulatedPions[i].move(n,enemyPosition,self.getPionPosition())
             if(canmove):
                 advantage = 0

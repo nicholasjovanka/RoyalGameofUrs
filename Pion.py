@@ -23,7 +23,7 @@ class PionClass:
             if temp in [8] and (temp in enemyPos or temp in playerPos):
                 return False
             # if the pion will land on teammate, decline
-            elif temp in playerPos:
+            elif temp in playerPos and temp != 15:
                 return False
             # player can move normally
             return True
@@ -41,7 +41,7 @@ class PionClass:
         canMove = self.canmove(n, enemyPos, playerPos)
         # (canmove,indicate next turn, enemy eaten)
         if(canMove == False):
-            return (False,False,-1)
+            return (False,True,-1)
         elif(self.position + n) in self.rosette:
             self.changeSafe(True)
             self.position += n
@@ -49,7 +49,7 @@ class PionClass:
         else:
             self.changeSafe(False)
             self.position += n
-            if self.position in enemyPos:
+            if self.position in enemyPos and self.position in [5, 6, 7, 8, 9, 10, 11, 12]:
                 return(True,True,self.position)
             return (True,True,-1)
 

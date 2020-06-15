@@ -1,13 +1,26 @@
 import random
 
 def turnRandomizer(p1, p2):
-    randomNum = random.randint(1,1)
+    randomNum = random.randint(1,2)
     if randomNum == 1:
         print("Player 1 goes first")
         return p1
     elif randomNum == 2:
         print("Player 2 goes first")
         return p2
+
+def turnRandomizer2():
+    return random.randint(1, 2)
+
+def turnSetter(p1, p2, turn):
+    if turn == 1:
+        p1.setIsActive(True)
+        p2.setIsActive(False)
+    elif turn == 2:
+        p1.setIsActive(False)
+        p2.setIsActive(True)
+
+    return p1, p2
 
 def diceRoll():
     randomNum1 = random.randint(0, 1)

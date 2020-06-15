@@ -3,7 +3,8 @@ from GreedyPlayer import GreedyPlayerClass
 import Utils
 
 if __name__ == "__main__":
-    x = MinMaxPlayerClass("Player 1",[1,'bot'], [15,15,15,15,15,15,15])
+    x = MinMaxPlayerClass("Player 1",[1,'bot'])
+    y = GreedyPlayerClass("Player 2", [2, "bot"])
     # print(x.canmoveArray(2,[0,0,7,0,0,0,0],[0,0,9,0,0,0,0]))
 
     # p1 = [14,15,13,8,11,4,0]
@@ -13,5 +14,3 @@ if __name__ == "__main__":
     # print(x.evalBoard(p2, [14,7,0,0,0,6,0], p1))
     # Utils.diceRoll()
     # Utils.diceRoll()
-
-    x.checkWin();

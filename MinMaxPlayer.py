@@ -17,7 +17,7 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                 advDist += 2
             if selfPos[i] == 15:
                 # print("finish")
-                advDist += 10000
+                advDist += 10
         # advDist = (15-enemyPos) - (15-selfPos)
         # if not prefSelfPos in self.rosette and selfPos in self.rosette:
         #     advDist += 2
@@ -53,7 +53,7 @@ class MinMaxPlayerClass(GreedyPlayerClass):
             if moveto == 8 and (moveto in enemyPos or moveto in selfPos):
                 return False
             # if the pion will land on teammate, decline
-            elif moveto in selfPos:
+            elif moveto in selfPos and moveto != 15:
                 return False
         return True
 
@@ -136,9 +136,9 @@ class MinMaxPlayerClass(GreedyPlayerClass):
             if n > -1:
                 values = []
                 for i in range(len(selfPos)):
-                    oldPionPosition = selfPos.copy()
-                    currPionPosition = selfPos.copy()
-                    oldEnemyPosition = enemyPos.copy()
+                    oldPionPosition = copy.copy(selfPos)
+                    currPionPosition = copy.copy(selfPos)
+                    oldEnemyPosition = copy.copy(enemyPos)
                     currPionPosition[i] += n
                     nxtplayer = 1
                     if self.canmoveArray(currPionPosition[i], oldPionPosition, enemyPos):
@@ -149,7 +149,7 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                             x = self.minmax(-1, newEnemyPos, currPionPosition, nxtplayer, iteration-1)
                             values.append(x)
                         else:
-                            print(currPionPosition, newEnemyPos, nxtplayer)
+                            # print(currPionPosition, newEnemyPos, nxtplayer)
                             x = self.evalBoard(newEnemyPos, currPionPosition, oldPionPosition)
                             values.append(x)
                     else:
@@ -161,16 +161,16 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                         #     x = self.evalBoard(oldEnemyPosition, oldPionPosition, oldPionPosition)
                         #     values.append(x)
                         values.append(-999999)
-                print(values)
+                # print(values)
                 return values.index(max(values))
             else:
                 values = []
                 for j in range(len(selfPos)):
                     rollResult = []
                     for i in range(5):
-                        oldPionPosition =  selfPos.copy()
-                        currPionPosition = selfPos.copy()
-                        oldEnemyPosition = enemyPos.copy()
+                        oldPionPosition =  copy.copy(selfPos)
+                        currPionPosition = copy.copy(selfPos)
+                        oldEnemyPosition = copy.copy(enemyPos)
                         currPionPosition[j] += i
                         nxtplayer = 1
                         if self.canmoveArray(currPionPosition[j], oldPionPosition, enemyPos):
@@ -198,9 +198,9 @@ class MinMaxPlayerClass(GreedyPlayerClass):
             for j in range(len(enemyPos)):
                 rollResult = []
                 for i in range(5):
-                    oldEnemyPosition = copy.copy(enemyPos)
-                    currEnemyPosition = copy.copy(enemyPos)
-                    oldPlayerPos = selfPos.copy()
+                    oldEnemyPosition = copy.deepcopy(enemyPos)
+                    currEnemyPosition = copy.deepcopy(enemyPos)
+                    oldPlayerPos = copy.deepcopy(selfPos)
                     currEnemyPosition[j] += i
                     nxtplayer = -1
                     if self.canmoveArray(currEnemyPosition[j], enemyPos, selfPos):
@@ -221,5 +221,5 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                         # rollResult.append(99999)
                 values.append(min(rollResult))
             x = min(values)
-            print(values, iteration)
+            # print(values, iteration)
             return x
