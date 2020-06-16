@@ -130,6 +130,8 @@ class MinMaxPlayerClass(GreedyPlayerClass):
     #         print(values, iteration)
     #         return x
         
+
+        
     # player = -1 => enemy, player = 1 => self
     def minmax(self, n, enemyPos, selfPos, player=1, iteration=3):
         if player == 1:
@@ -153,13 +155,6 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                             x = self.evalBoard(newEnemyPos, currPionPosition, oldPionPosition)
                             values.append(x)
                     else:
-                        # if iteration > 0:
-                        #     x = self.minmax(-1, oldEnemyPosition, oldPionPosition,-1,iteration-1)
-                        #     values.append(x)
-                        # else:
-                        #     print(oldPionPosition, oldEnemyPosition, nxtplayer)
-                        #     x = self.evalBoard(oldEnemyPosition, oldPionPosition, oldPionPosition)
-                        #     values.append(x)
                         values.append(-999999)
                 # print(values)
                 return values.index(max(values))
@@ -183,11 +178,6 @@ class MinMaxPlayerClass(GreedyPlayerClass):
                                 # print(currPionPosition, nextenemypos, nxtplayer)
                                 rollResult.append(self.evalBoard(nextenemypos, currPionPosition, oldPionPosition) * self.getChance(i))
                         else:
-                            # if iteration > 0:
-                            #     rollResult.append(self.minmax(-1,oldEnemyPosition, oldPionPosition, -1, iteration-1) * self.getChance(i))
-                            # else:
-                            #     # print(oldPionPosition, enemyPos, nxtplayer)
-                            #     rollResult.append(self.evalBoard(oldEnemyPosition, oldPionPosition, oldPionPosition) * self.getChance(i))
                             rollResult.append(-99999)
                     values.append(max(rollResult))
                 x = max(values)
